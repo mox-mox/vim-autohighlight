@@ -1,0 +1,190 @@
+*autohighlight.txt*	For NeoVim version v0.2.3 Last change: 2018 April 15
+*autohighlight*
+
+
+          ___         __        __    _       __    ___       __    __  ~
+         /   | __  __/ /_____  / /_  (_)___ _/ /_  / (_)___ _/ /_  / /_ ~
+        / /| |/ / / / __/ __ \/ __ \/ / __ `/ __ \/ / / __ `/ __ \/ __/ ~
+       / ___ / /_/ / /_/ /_/ / / / / / /_/ / / / / / / /_/ / / / / /_   ~
+      /_/  |_\__,_/\__/\____/_/ /_/_/\__, /_/ /_/_/_/\__, /_/ /_/\__/   ~
+                                    /____/          /____/              ~
+
+
+
+                              Reference Manual~
+
+
+==============================================================================
+CONTENTS                                                *autohighlight-contents*
+
+    1.Intro........................................|autohighlight-intro|
+        1.1.Quick start............................|autohighlight-quickstart|
+        1.2.Recommended settings...................|autohighlight-recommended|
+    2.Provided Mappings............................|autohighlight-mappings|
+    3.Provided Commands............................|autohighlight-commands|
+    4.Settings en detail...........................|autohighlight-settings|
+		4.1 Enabled................................|autohighlight-enabled|
+		4.2 Highlight..............................|autohighlight-highlight|
+		4.3 Priority...............................|autohighlight-priority|
+		4.4 Event..................................|autohighlight-event|
+    5.About........................................|autohighlight-about|
+    6.License......................................|autohighlight-license|
+
+
+==============================================================================
+1. Intro                                                   *autohighlight-intro*
+
+Autohighlight automatically highlights the current word under the cursor.
+
+Suppose you are looking at some source code and try to grasp the structure. You
+will need to get an idea where else variables, functions or whatever you are
+looking at are used. You could search for them but for a quick glance at some
+code, this is rather tedious. Instead, just have Vim highlight whatever is
+under the cursor. As an added bonus, this way will not interfere with normal
+search operation.
+
+------------------------------------------------------------------------------
+1.1. Quick start                                      *autohighlight-quickstart*
+
+Well you have more or less already done what needed to be done: Install it. Now
+move the cursor over a word. It - and all other instances of that word - should
+be highlighted. Move the cursor away from the word and it should go back to its
+normal colour.
+
+You can control the highlighting and when the highlighting will start as
+described in |autohighlight-settings| and set a mapping to enable or disable
+highlighting as described in |autohighlight-recommended|.
+
+
+------------------------------------------------------------------------------
+1.2. Recommended settings                            *autohighlight-recommended*
+
+Autohighlight is more or less a do-something-in-the-background plugin.
+Therefore the only recommended setting is to create a mapping to toggle
+highlighting:
+
+>
+	map <leader>hl <Plug>autohighlight_toggle
+<
+
+==============================================================================
+2. Mappings                                             *autohighlight-mappings*
+
+Autohighlight currently only supports one mapping:
+
+	*<Plug>autohighlight_toggle* will toggle highlighting the cursor word.
+
+==============================================================================
+3. Commands                                             *autohighlight-commands*
+
+Beside the mapping, there are some commands to control the behaviour of
+Autohighlight:
+
+" Enable, Disable and Toggle Autohighlight
+*AutohighlightEnable*        Enables highlighting. See |g:autohighlight_enabled|.
+*AutohighlightDisable*       Disables highlighting. See |g:autohighlight_enabled|.
+*AutohighlightToggle*        Toggles highlighting. See |g:autohighlight_enabled|.
+
+" Change the Autohighlight colors
+*AutohighlightSetFG*         Sets the foreground colour of the hightlighted
+text. See |g:autohighlight_highlight|.
+*AutohighlightSetBG*         Sets the background colour of the hightlighted
+text. See |g:autohighlight_highlight|.
+*AutohighlightSetATTR*       Sets the text attributes of the hightlighted
+text. See |g:autohighlight_highlight|.
+
+*AutohighlightPriority*      Set the match priority of the Autohighlight text
+matching. See |g:autohighlight_priority|.
+
+
+" Set the Autohighlight event
+*AutohighlightCursorMoved*  Selects the 'CursorMoved' event to trigger
+hightlighting. See |g:autohighlight_event|.
+*AutohighlightCursorHold*  Selects the 'CursorHold' event to trigger
+hightlighting. See |g:autohighlight_event|.
+
+==============================================================================
+4. Settings en detail                                   *autohighlight-settings*
+
+------------------------------------------------------------------------------
+4.1. Enabled                                             *autohighlight-enabled*
+                                                       *g:autohighlight_enabled*
+Enable or disable highlighting on-the-fly.
+When `g:autohighlight_enabled` is set, the current word under the cursor and all
+other occurrences of that word will be highlighted.
+
+Default: 
+>
+	let g:autohighlight_enabled = v:true
+<
+
+------------------------------------------------------------------------------
+4.2. Highlight                                         *autohighlight-highlight*
+                                                     *g:autohighlight_highlight*
+Set the highlight colours and text attributes.
+`g:autohighlight_highlight` is a dictionary containing t
+Enable or disable highlighting on-the-fly.
+When g:autohighlight_enabled is set, the current word under the cursor and all
+other occurrences of that word will be highlighted.
+Fields: 'ctermfg', 'ctermbg', 'cterm', 'guifg', 'guibg', 'gui' as defined in
+|highlight-args|.
+
+Default: 
+>
+	let g:autohighlight_highlight = {
+		\ 'ctermfg':'green',
+		\ 'ctermbg':'NONE',
+		\ 'cterm':'NONE',
+		\ 'guifg':'#ff0000',
+		\ 'guibg':'NONE',
+		\ 'gui':'NONE'
+		\ }
+<
+
+------------------------------------------------------------------------------
+4.3. Priority                                           *autohighlight-priority*
+                                                      *g:autohighlight_priority*
+Set the matcher priority for the auto-highlighted words. A higher priority
+means the Autohighlight highlighting will override other highlights.  One
+notable such highlight is the normal seach using the |hlsearch| group which
+has a priority of 0. So, to leave the normal search alone, set
+`g:autohighlight_priority`to a negative number.  See |matchadd()| for further
+explanation.
+
+Default: 
+>
+	let g:autohighlight_priority = -1
+<
+
+------------------------------------------------------------------------------
+4.4. Event                                                 *autohighlight-event*
+                                                         *g:autohighlight_event*
+Set when the word under the cursor will get highlighted. Currently the only
+supported events are |CursorHold| and |CursorMoved|.
+Set `g:autohighlight_event` to `CursorHold` to have the highlighting start
+after |updatetime| (so, with a short timeout without user interaction), or
+set `g:autohighlight_event` to `CursorMoved` to have the highlighting start
+immediately after the cursor moves over a word.
+
+Default: 
+>
+	let g:autohighlight_event = 'CursorMoved'
+<
+
+==============================================================================
+5. About                                                   *Autohighlight-about*
+
+The maintainer of Autohighlight is:
+    mox (GitHub: mox-mox)
+
+Find the latest version of Autohighlight at:
+
+    http://github.com/mox-mox/vim-autohighlight
+
+==============================================================================
+6. License                                               *autohighlight-license*
+
+Autohighlight is released under the GPL v3.0
+See *LICENSE*
+
+ vim:tw=78:sw=4:ft=help:norl:
