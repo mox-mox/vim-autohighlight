@@ -1,5 +1,5 @@
-Autohighlight - Highlight the worder under the cursor
-=====================================================
+Autohighlight - Highlight the word under the cursor
+===================================================
 
 What does it do?
 ----------------
